@@ -35,7 +35,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static final String MOVIE_API_ROOT = "http://api.themoviedb.org/3/discover/movie";
-    public static final String API_KEY = “YOUR_API_KEY”;
+    public static final String API_KEY = "YOUR_API_KEY";
 
     private Activity context;
     private Spinner spinner;
