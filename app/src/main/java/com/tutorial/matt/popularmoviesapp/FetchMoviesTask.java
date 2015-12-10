@@ -1,10 +1,15 @@
 package com.tutorial.matt.popularmoviesapp;
 
 import android.app.Application;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.tutorial.matt.popularmoviesapp.data.MovieContract.MovieEntry;
+import com.tutorial.matt.popularmoviesapp.data.MovieDbHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +25,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Created by matt on 12/8/15.
@@ -116,6 +122,29 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
             Log.e(TAG, e.toString());
         }
 
+        ArrayList<ContentValues> cvList = new ArrayList<ContentValues>();
+        for (Movie movie : movies) {
+            ContentValues cv = new ContentValues();
+            cv.put(MovieEntry.COLUMN_TMDB_ID, movie.getTmdbId());
+            cv.put(MovieEntry.COLUMN_TITLE, movie.getTitle());
+            cv.put(MovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
+            cv.put(MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
+            cv.put(MovieEntry.COLUMN_VOTE_AVERAGE, movie.getVoteAverage());
+            cv.put(MovieEntry.COLUMN_OVERVIEW, movie.getOverview());
+
+            cvList.add(cv);
+        }
+
+        if (!cvList.isEmpty()) {
+            MovieDbHelper dbHelper = new MovieDbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.beginTransaction();
+            for (ContentValues cv : cvList) {
+                db.insert(MovieEntry.TABLE_NAME, null, cv);
+            }
+            db.endTransaction();
+        }
+
         return movies;
     }
 
@@ -127,18 +156,20 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
     private String buildUrlString(String sortBy) {
         String urlStr = context.getResources().getString(R.string.movie_api_root);
         urlStr += "?sort_by=";
-        if ("Most Popular".equals(sortBy)) {
+
+        String[] sortByOptions = context.getResources().getStringArray(R.array.sort_by_array);
+        if (sortByOptions[0].equals(sortBy)) {
             urlStr += "popularity";
         }
-        else if ("Highest Rated".equals(sortBy)){
+        else if (sortByOptions[1].equals(sortBy)){
             urlStr += "vote_average";
         }
         else {
-            Log.e("URL", sortBy);
+            Log.e(TAG, sortBy);
             return "";
         }
         urlStr += ".desc&api_key=" + context.getResources().getString(R.string.movie_api_key);
-        Log.d("URL", urlStr);
+        Log.d(TAG, urlStr);
         return urlStr;
     }
 }

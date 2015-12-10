@@ -20,8 +20,11 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private Activity context;
+
     private Spinner spinner;
     private Button submitButton;
+
+    private MovieListAdapter movieListAdapter;
     private GridView gridView;
 
     @Override
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 new FetchMoviesTask(context, fetchMoviesTaskCompleteListener).execute((String) spinner.getSelectedItem());
             }
         });
+
         gridView = (GridView) findViewById(R.id.poster_grid);
     }
 

@@ -10,6 +10,9 @@ import org.json.JSONObject;
  */
 public class Movie {
 
+    private static final String TAG = Movie.class.getSimpleName();
+
+    private String tmdbId;
     private String title;
     private String releaseDate;
     private String posterPath;
@@ -18,35 +21,44 @@ public class Movie {
 
     public Movie(JSONObject data) {
         try {
+            tmdbId = data.getString("id");
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+        }
+
+        try {
             title = data.getString("title");
         } catch (JSONException e) {
-            Log.e("Movie", e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
 
         try {
             releaseDate = data.getString("release_date");
         } catch (JSONException e) {
-            Log.e("Movie", e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
 
         try {
             posterPath = data.getString("poster_path");
         } catch (JSONException e) {
-            Log.e("Movie", e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
 
         try {
             voteAverage = data.getString("vote_average");
         } catch (JSONException e) {
-            Log.e("Movie", e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
 
         try {
             overview = data.getString("overview");
         } catch (JSONException e) {
-            Log.e("Movie", e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
     }
+
+    public String getTmdbId() { return tmdbId; }
+    public void setTmdbId(String tmdbId) { this.tmdbId = tmdbId; }
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
