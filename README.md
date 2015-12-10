@@ -1,4 +1,5 @@
 # UdacityMovieApp1
 A movie app for my Udacity nano-degree apps. (Project 1)
 
-Replace “YOUR_API_KEY” in main activity with your TMDB API key before you run.
+## Setup
+Replace “YOUR_API_KEY” in res/values/sample_config.xml with your TMDB API key, and save file as res/values/config.xml.
