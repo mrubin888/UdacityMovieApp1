@@ -19,6 +19,8 @@ public class MovieContract {
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_MOVIE;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_MOVIE;
 
         public static final String TABLE_NAME = "movie";
 
@@ -28,6 +30,7 @@ public class MovieContract {
         public static final String COLUMN_POSTER_PATH = "poster_path";
         public static final String COLUMN_VOTE_AVERAGE = "vote_average";
         public static final String COLUMN_OVERVIEW = "overview";
+        public static final String COLUMN_IS_FAVORITE = "is_favorite";
 
         public static final String COLUMN_DATE_CREATED = "date_created";
     }

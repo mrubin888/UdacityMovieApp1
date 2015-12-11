@@ -20,6 +20,9 @@
         <activity
             android:name=".MovieDetailsActivity"
             android:parentActivityName=".MainActivity" />
+        <provider
+            android:authorities="com.tutorial.matt.popularmoviesapp"
+            android:name=".data.MovieContentProvider" />
     </application>
 
 </manifest>

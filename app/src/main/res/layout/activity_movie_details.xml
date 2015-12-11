@@ -40,13 +40,23 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/movie_details_title"
             android:layout_toRightOf="@id/movie_details_poster_image"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            android:layout_marginBottom="20dp" />
+
+        <ImageView
+            android:id="@+id/movie_details_favorite_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/favorite_filled"
+            android:layout_below="@id/movie_details_poster_image"
+            android:layout_marginRight="20dp"/>
 
         <TextView
             android:id="@+id/movie_details_vote_average"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/movie_details_poster_image"
+            android:layout_alignTop="@id/movie_details_favorite_button"
+            android:layout_toRightOf="@id/movie_details_favorite_button"
             android:textSize="14dp"
             android:layout_marginBottom="20dp"/>
 

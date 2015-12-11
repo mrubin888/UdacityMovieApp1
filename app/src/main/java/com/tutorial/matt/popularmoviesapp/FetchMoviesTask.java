@@ -136,13 +136,11 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         }
 
         if (!cvList.isEmpty()) {
-            MovieDbHelper dbHelper = new MovieDbHelper(context);
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            db.beginTransaction();
-            for (ContentValues cv : cvList) {
-                db.insert(MovieEntry.TABLE_NAME, null, cv);
-            }
-            db.endTransaction();
+            ContentValues[] cvArr = new ContentValues[cvList.size()];
+            cvList.toArray(cvArr);
+            int inserted = context.getContentResolver().bulkInsert(MovieEntry.CONTENT_URI, cvArr);
+
+            Log.d(TAG, "Inserted " + inserted);
         }
 
         return movies;
