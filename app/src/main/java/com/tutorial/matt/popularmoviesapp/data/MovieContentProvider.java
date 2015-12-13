@@ -9,11 +9,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 /**
  * Created by matt on 12/10/15.
  */
 public class MovieContentProvider extends ContentProvider {
+
+    private static final String TAG = MovieContentProvider.class.getSimpleName();
 
     private static final UriMatcher uriMatcher = buildUriMatcher();
     private MovieDbHelper movieDbHelper;
@@ -40,16 +43,31 @@ public class MovieContentProvider extends ContentProvider {
         Cursor retCursor;
 
         switch (uriMatcher.match(uri)) {
-            case MOVIES:
+            case MOVIES: {
+                Log.d(TAG, "MOVIES MATCHED");
                 retCursor = movieDbHelper.getReadableDatabase().query(MovieContract.MovieEntry.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
                         null,
                         null,
-                        null
+                        sortOrder
                 );
-                break;
+            }
+            break;
+
+            case MOVIE_BY_TMDB_ID: {
+                String id = uri.getPathSegments().get(1);
+
+                retCursor = movieDbHelper.getReadableDatabase().query(MovieContract.MovieEntry.TABLE_NAME,
+                        projection,
+                        "tmdb_id=?",
+                        new String[]{id},
+                        null,
+                        null,
+                        null);
+            }
+            break;
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -75,10 +93,10 @@ public class MovieContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        long id = movieDbHelper.getWritableDatabase().insertWithOnConflict(MovieContract.MovieEntry.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-        if (id == -1) {
+        long id = movieDbHelper.getWritableDatabase().insertWithOnConflict(MovieContract.MovieEntry.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        /*if (id == -1) {
             throw new SQLiteException("Failed to insert row into database.");
-        }
+        }*/
         return ContentUris.withAppendedId(uri, id);
     }
 
@@ -90,7 +108,7 @@ public class MovieContentProvider extends ContentProvider {
         }
 
         if (id != null) {
-            return movieDbHelper.getWritableDatabase().delete(MovieContract.MovieEntry.TABLE_NAME, "tmbd_id=?", new String[]{id});
+            return movieDbHelper.getWritableDatabase().delete(MovieContract.MovieEntry.TABLE_NAME, "tmdb_id=?", new String[]{id});
         }
 
         return -1;
@@ -104,7 +122,7 @@ public class MovieContentProvider extends ContentProvider {
         }
 
         if (id != null) {
-            return movieDbHelper.getWritableDatabase().update(MovieContract.MovieEntry.TABLE_NAME, values, "tmbd_id=?", new String[]{id});
+            return movieDbHelper.getWritableDatabase().update(MovieContract.MovieEntry.TABLE_NAME, values, "tmdb_id=?", new String[]{id});
         }
 
         return -1;

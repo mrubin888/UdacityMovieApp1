@@ -1,5 +1,6 @@
 package com.tutorial.matt.popularmoviesapp;
 
+import android.database.Cursor;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -18,6 +19,8 @@ public class Movie {
     private String posterPath;
     private String voteAverage;
     private String overview;
+
+    private boolean isFavorite = false;
 
     public Movie(JSONObject data) {
         try {
@@ -57,6 +60,16 @@ public class Movie {
         }
     }
 
+    public Movie (Cursor cursor) {
+        tmdbId = cursor.getString(cursor.getColumnIndex("tmdb_id"));
+        title = cursor.getString(cursor.getColumnIndex("title"));
+        releaseDate = cursor.getString(cursor.getColumnIndex("release_date"));
+        posterPath = cursor.getString(cursor.getColumnIndex("poster_path"));
+        voteAverage = cursor.getString(cursor.getColumnIndex("vote_average"));
+        overview = cursor.getString(cursor.getColumnIndex("overview"));
+        isFavorite = cursor.getInt(cursor.getColumnIndex("is_favorite")) != 0;
+    }
+
     public String getTmdbId() { return tmdbId; }
     public void setTmdbId(String tmdbId) { this.tmdbId = tmdbId; }
 
@@ -74,4 +87,6 @@ public class Movie {
 
     public String getOverview() { return overview; }
     public void setOverview(String overview) { this.overview = overview; }
+
+    public boolean isFavorite() { return isFavorite; }
 }

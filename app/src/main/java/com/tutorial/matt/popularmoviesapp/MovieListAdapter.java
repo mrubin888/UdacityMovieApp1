@@ -22,6 +22,10 @@ public class MovieListAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<Movie> movies;
 
+    public MovieListAdapter(Context context) {
+        this(context, new ArrayList<Movie>());
+    }
+
     public MovieListAdapter(Context context, ArrayList<Movie> movies) {
         this.context = context;
         this.movies = movies;
@@ -55,5 +59,10 @@ public class MovieListAdapter extends BaseAdapter {
         holder.posterImage = (ImageView) cellView.findViewById(R.id.poster_image);
         Picasso.with(context).load("http://image.tmdb.org/t/p/w185/" + movie.getPosterPath()).into(holder.posterImage);
         return cellView;
+    }
+
+    public void setMovies (ArrayList<Movie> movies) {
+        this.movies = movies;
+        notifyDataSetChanged();
     }
 }
