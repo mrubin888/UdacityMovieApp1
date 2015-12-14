@@ -5,13 +5,14 @@ import com.tutorial.matt.popularmoviesapp.data.MovieContract.MovieEntry;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by matt on 12/10/15.
  */
 public class MovieDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 12;
     public static final String DATABASE_NAME = "movie.db";
 
     public MovieDbHelper(Context context) {
@@ -21,9 +22,8 @@ public class MovieDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE " + MovieEntry.TABLE_NAME + " (" +
-                MovieEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                MovieEntry._ID + " INTEGER PRIMARY KEY, " +
 
-                MovieEntry.COLUMN_TMDB_ID + " TEXT UNIQUE NOT NULL, " +
                 MovieEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
                 MovieEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
                 MovieEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +

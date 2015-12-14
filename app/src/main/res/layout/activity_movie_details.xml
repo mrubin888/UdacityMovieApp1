@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tutorial.matt.popularmoviesapp.MovieDetailsActivity">
+    tools:context=".activities.MovieDetailsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -65,7 +65,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/movie_details_vote_average"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            android:layout_marginBottom="20dp"/>
+
+        <LinearLayout
+            android:id="@+id/movie_details_links"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/movie_details_overview">
+
+            <Button
+                android:id="@+id/movie_details_trailers_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trailers"/>
+
+            <Button
+                android:id="@+id/movie_details_reviews_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Reviews"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

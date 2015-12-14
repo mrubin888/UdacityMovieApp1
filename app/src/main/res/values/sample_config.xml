@@ -1,4 +1,5 @@
 <resources>
-    <!--<string name="movie_api_root">http://api.themoviedb.org/3/discover/movie</string>-->
+    <!--<string name="movie_discover_api_root">http://api.themoviedb.org/3/discover/movie</string>-->
+    <!--<string name="movie_detail_api_root">http://api.themoviedb.org/3/movie</string>-->
     <!--<string name="movie_api_key">YOUR_API_KEY</string>-->
 </resources>

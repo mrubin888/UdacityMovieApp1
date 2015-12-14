@@ -1,12 +1,10 @@
-package com.tutorial.matt.popularmoviesapp;
+package com.tutorial.matt.popularmoviesapp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,10 +12,13 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Spinner;
 
+import com.tutorial.matt.popularmoviesapp.adapters.MovieListAdapter;
+import com.tutorial.matt.popularmoviesapp.listeners.OnFetchMoviesTaskCompleteListener;
+import com.tutorial.matt.popularmoviesapp.R;
 import com.tutorial.matt.popularmoviesapp.data.MovieContract;
+import com.tutorial.matt.popularmoviesapp.models.Movie;
+import com.tutorial.matt.popularmoviesapp.tasks.FetchMoviesTask;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,23 +50,17 @@ public class MainActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("DEBUGz", "Does this at least get hit?");
                 String selection = spinner.getSelectedItem().toString();
                 String[] spinnerOptions = getResources().getStringArray(R.array.sort_by_array);
 
                 if (spinnerOptions[2].equals(selection)) { // Favorites)
-                    Log.d("DEBUGz", "How about this?");
                     Cursor cursor = getContentResolver().query(MovieContract.MovieEntry.CONTENT_URI, null, "is_favorite", null, null);
-                    Log.d("DEBUGz", "" + cursor.getCount());
                     cursor.moveToFirst();
                     final ArrayList<Movie> movies = new ArrayList<Movie>();
-                    Log.d("DEBUG", "HIT");
                     for (int i = 0; i < cursor.getCount(); i++) {
                         movies.add(new Movie(cursor));
-                        Log.d("DEBUG", cursor.getString(cursor.getColumnIndex("title")));
                         cursor.moveToNext();
                     }
-                    Log.d("DEBUG", "HIT 2");
                     cursor.close();
 
                     MovieListAdapter movieListAdapter = (MovieListAdapter) gridView.getAdapter();
@@ -85,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 Movie clickedMovie = (Movie) adapter.getItem(position);
 
                 Intent intent = new Intent(context, MovieDetailsActivity.class);
-                intent.putExtra("tmdb_id", clickedMovie.getTmdbId());
+                intent.putExtra("id", clickedMovie.getId());
 
                 startActivity(intent);
             }

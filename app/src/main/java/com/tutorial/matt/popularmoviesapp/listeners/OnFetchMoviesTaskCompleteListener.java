@@ -1,4 +1,6 @@
-package com.tutorial.matt.popularmoviesapp;
+package com.tutorial.matt.popularmoviesapp.listeners;
+
+import com.tutorial.matt.popularmoviesapp.models.Movie;
 
 import java.util.ArrayList;
 

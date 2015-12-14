@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,8 +18,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MovieDetailsActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".activities.MovieDetailsActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".activities.MovieReviewsActivity"
+            android:parentActivityName=".activities.MovieDetailsActivity"/>
+        <activity
+            android:name=".activities.MovieTrailersActivity"
+            android:parentActivityName=".activities.MovieDetailsActivity"/>
         <provider
             android:authorities="com.tutorial.matt.popularmoviesapp"
             android:name=".data.MovieContentProvider" />

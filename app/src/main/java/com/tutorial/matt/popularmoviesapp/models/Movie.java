@@ -1,4 +1,4 @@
-package com.tutorial.matt.popularmoviesapp;
+package com.tutorial.matt.popularmoviesapp.models;
 
 import android.database.Cursor;
 import android.util.Log;
@@ -13,7 +13,8 @@ public class Movie {
 
     private static final String TAG = Movie.class.getSimpleName();
 
-    private String tmdbId;
+    private String id;
+
     private String title;
     private String releaseDate;
     private String posterPath;
@@ -24,7 +25,7 @@ public class Movie {
 
     public Movie(JSONObject data) {
         try {
-            tmdbId = data.getString("id");
+            id = data.getString("id");
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
         }
@@ -61,7 +62,8 @@ public class Movie {
     }
 
     public Movie (Cursor cursor) {
-        tmdbId = cursor.getString(cursor.getColumnIndex("tmdb_id"));
+        id = cursor.getString(cursor.getColumnIndex("_id"));
+
         title = cursor.getString(cursor.getColumnIndex("title"));
         releaseDate = cursor.getString(cursor.getColumnIndex("release_date"));
         posterPath = cursor.getString(cursor.getColumnIndex("poster_path"));
@@ -70,8 +72,8 @@ public class Movie {
         isFavorite = cursor.getInt(cursor.getColumnIndex("is_favorite")) != 0;
     }
 
-    public String getTmdbId() { return tmdbId; }
-    public void setTmdbId(String tmdbId) { this.tmdbId = tmdbId; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }

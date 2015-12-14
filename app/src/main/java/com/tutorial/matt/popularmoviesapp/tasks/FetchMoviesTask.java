@@ -1,11 +1,14 @@
-package com.tutorial.matt.popularmoviesapp;
+package com.tutorial.matt.popularmoviesapp.tasks;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.tutorial.matt.popularmoviesapp.listeners.OnFetchMoviesTaskCompleteListener;
+import com.tutorial.matt.popularmoviesapp.R;
 import com.tutorial.matt.popularmoviesapp.data.MovieContract.MovieEntry;
+import com.tutorial.matt.popularmoviesapp.models.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,10 +41,6 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
     @Override
     // params[0] = sort_by from spinner
     protected ArrayList<Movie> doInBackground(String... params) {
-
-        if (params.length == 0) {
-            return null;
-        }
 
         String resultStr = "";
         ArrayList<Movie> movies = new ArrayList<Movie>();
@@ -118,7 +117,7 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         ArrayList<ContentValues> cvList = new ArrayList<ContentValues>();
         for (Movie movie : movies) {
             ContentValues cv = new ContentValues();
-            cv.put(MovieEntry.COLUMN_TMDB_ID, movie.getTmdbId());
+            cv.put(MovieEntry._ID, movie.getId());
             cv.put(MovieEntry.COLUMN_TITLE, movie.getTitle());
             cv.put(MovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
             cv.put(MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
@@ -131,8 +130,8 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         if (!cvList.isEmpty()) {
             ContentValues[] cvArr = new ContentValues[cvList.size()];
             cvList.toArray(cvArr);
-            int inserted = context.getContentResolver().bulkInsert(MovieEntry.CONTENT_URI, cvArr);
 
+            int inserted = context.getContentResolver().bulkInsert(MovieEntry.CONTENT_URI, cvArr);
             Log.d(TAG, "Inserted " + inserted);
         }
 
@@ -145,7 +144,7 @@ public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
     }
 
     private String buildUrlString(String sortBy) {
-        String urlStr = context.getResources().getString(R.string.movie_api_root);
+        String urlStr = context.getResources().getString(R.string.movie_discover_api_root);
         urlStr += "?sort_by=";
 
         String[] sortByOptions = context.getResources().getStringArray(R.array.sort_by_array);

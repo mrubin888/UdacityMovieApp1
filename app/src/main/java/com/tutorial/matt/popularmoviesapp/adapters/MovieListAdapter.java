@@ -1,9 +1,6 @@
-package com.tutorial.matt.popularmoviesapp;
+package com.tutorial.matt.popularmoviesapp.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Debug;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+import com.tutorial.matt.popularmoviesapp.R;
+import com.tutorial.matt.popularmoviesapp.models.Movie;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 /**
  * Created by matt on 12/8/15.
