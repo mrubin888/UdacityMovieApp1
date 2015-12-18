@@ -1,11 +1,10 @@
 package com.tutorial.matt.popularmoviesapp.data;
 
-import com.tutorial.matt.popularmoviesapp.data.MovieContract.MovieEntry;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
+import com.tutorial.matt.popularmoviesapp.data.MovieContract.MovieEntry;
 
 /**
  * Created by matt on 12/10/15.

@@ -8,9 +8,9 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.tutorial.matt.popularmoviesapp.listeners.OnFetchMovieReviewsTaskCompleteListener;
 import com.tutorial.matt.popularmoviesapp.R;
 import com.tutorial.matt.popularmoviesapp.adapters.ReviewListAdapter;
+import com.tutorial.matt.popularmoviesapp.listeners.OnFetchMovieReviewsTaskCompleteListener;
 import com.tutorial.matt.popularmoviesapp.models.Review;
 import com.tutorial.matt.popularmoviesapp.tasks.FetchMovieReviewsTask;
 

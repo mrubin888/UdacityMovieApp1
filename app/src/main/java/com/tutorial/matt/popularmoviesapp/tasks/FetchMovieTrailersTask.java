@@ -5,8 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.tutorial.matt.popularmoviesapp.R;
-import com.tutorial.matt.popularmoviesapp.listeners.OnFetchMovieReviewsTaskCompleteListener;
-import com.tutorial.matt.popularmoviesapp.models.Review;
+import com.tutorial.matt.popularmoviesapp.listeners.OnFetchMovieTrailersTaskCompleteListener;
+import com.tutorial.matt.popularmoviesapp.models.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,25 +24,25 @@ import java.util.ArrayList;
 /**
  * Created by matt on 12/13/15.
  */
-public class FetchMovieReviewsTask extends AsyncTask<String, Void, ArrayList<Review>> {
+public class FetchMovieTrailersTask extends AsyncTask<String, Void, ArrayList<Trailer>> {
 
-    private static final String TAG = FetchMovieReviewsTask.class.getSimpleName();
+    private static final String TAG = FetchMovieTrailersTask.class.getSimpleName();
 
     private Context context;
-    private OnFetchMovieReviewsTaskCompleteListener listener;
+    private OnFetchMovieTrailersTaskCompleteListener listener;
 
-    public FetchMovieReviewsTask (Context context, OnFetchMovieReviewsTaskCompleteListener listener) {
+    public FetchMovieTrailersTask (Context context, OnFetchMovieTrailersTaskCompleteListener listener) {
         this.context = context;
         this.listener = listener;
     }
 
     @Override
-    protected ArrayList<Review> doInBackground(String... params) {
+    protected ArrayList<Trailer> doInBackground(String... params) {
 
         String movieId = params[0];
 
         String resultStr = "";
-        ArrayList<Review> reviews = new ArrayList<Review>();
+        ArrayList<Trailer> trailers = new ArrayList<Trailer>();
 
         HttpURLConnection connection = null;
         BufferedReader reader = null;
@@ -100,8 +100,8 @@ public class FetchMovieReviewsTask extends AsyncTask<String, Void, ArrayList<Rev
             JSONArray resultsArr = (JSONArray) resultJson.get("results");
             for (int i = 0; i < resultsArr.length(); i++) {
                 JSONObject obj = (JSONObject) resultsArr.get(i);
-                Review review = new Review(obj);
-                reviews.add(review);
+                Trailer trailer = new Trailer(obj);
+                trailers.add(trailer);
             }
         }
         catch (JSONException e) {
@@ -109,18 +109,18 @@ public class FetchMovieReviewsTask extends AsyncTask<String, Void, ArrayList<Rev
         }
 
         Log.d (TAG, "Task should post execute");
-        Log.d (TAG, "Found " + reviews.size() + " reviews.");
-        return reviews;
+        Log.d (TAG, "Found " + trailers.size() + " reviews.");
+        return trailers;
     }
 
     @Override
-    protected void onPostExecute(ArrayList<Review> reviews) {
+    protected void onPostExecute(ArrayList<Trailer> trailers) {
         Log.d (TAG, "Task onPostExecute");
-        this.listener.onTaskCompleted(reviews);
+        this.listener.onTaskCompleted(trailers);
     }
 
     private String buildUrlString(String movieId) {
-        String urlStr = context.getResources().getString(R.string.movie_detail_api_root) + "/" + movieId + "/reviews";
+        String urlStr = context.getResources().getString(R.string.movie_detail_api_root) + "/" + movieId + "/videos";
         urlStr += "?api_key=" + context.getResources().getString(R.string.movie_api_key);
 
         return urlStr;

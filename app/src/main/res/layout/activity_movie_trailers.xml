@@ -9,14 +9,14 @@
     android:paddingTop="@dimen/activity_vertical_margin">>
 
     <TextView
-        android:id="@+id/movie_reviews_header"
+        android:id="@+id/movie_trailers_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:layout_marginBottom="20dp"/>
 
     <ListView
-        android:id="@+id/movie_reviews_list"
+        android:id="@+id/movie_trailers_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>

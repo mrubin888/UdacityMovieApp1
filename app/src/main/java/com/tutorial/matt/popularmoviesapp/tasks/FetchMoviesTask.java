@@ -5,9 +5,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.tutorial.matt.popularmoviesapp.listeners.OnFetchMoviesTaskCompleteListener;
 import com.tutorial.matt.popularmoviesapp.R;
 import com.tutorial.matt.popularmoviesapp.data.MovieContract.MovieEntry;
+import com.tutorial.matt.popularmoviesapp.listeners.OnFetchMoviesTaskCompleteListener;
 import com.tutorial.matt.popularmoviesapp.models.Movie;
 
 import org.json.JSONArray;
