@@ -41,12 +41,12 @@ public class MovieGridFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+
         Log.d(TAG, "onCreateView: ");
 
         context = getActivity();
         View rootView = inflater.inflate(R.layout.grid_fragment, container, false);
-
-        new FetchMoviesTask(context, fetchMoviesTaskCompleteListener).execute(getResources().getStringArray(R.array.sort_by_array)[0]);
 
         spinner = (Spinner) rootView.findViewById(R.id.sort_by_spinner);
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
@@ -88,15 +88,28 @@ public class MovieGridFragment extends Fragment {
 
                 Callback callback = (Callback) getActivity();
                 callback.onItemSelected(clickedMovie.getId());
-//
-//                Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
-//                intent.putExtra("id", clickedMovie.getId());
-//
-//                startActivity(intent);
             }
         });
 
+        if (savedInstanceState == null) {
+            new FetchMoviesTask(context, fetchMoviesTaskCompleteListener).execute(spinner.getSelectedItem().toString());
+        }
+        else {
+            ArrayList<Movie> movies = savedInstanceState.getParcelableArrayList("TEMP_KEY");
+            MovieListAdapter movieListAdapter = (MovieListAdapter) gridView.getAdapter();
+            movieListAdapter.setMovies(movies);
+        }
+
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        MovieListAdapter movieListAdapter = (MovieListAdapter) gridView.getAdapter();
+        ArrayList<Movie> movies = movieListAdapter.getMovies();
+        outState.putParcelableArrayList("TEMP_KEY", movies);
+
+        super.onSaveInstanceState(outState);
     }
 
     private OnFetchMoviesTaskCompleteListener fetchMoviesTaskCompleteListener = new OnFetchMoviesTaskCompleteListener() {
